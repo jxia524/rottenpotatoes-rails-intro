@@ -7,8 +7,11 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = Movie.getRatings()
     @sorted = params[:sort]
-    @movies = Movie.all.order(@sorted)
+    #@movies = Movie.where(rating:'G').all.order(@sorted)
+    @ratings = params[:ratings] || {"G"=>"1", "PG"=>"1", "PG-13"=>"1", "R"=>"1"}
+    @movies = Movie.where(rating: @ratings.keys).all.order(@sorted)
   end
 
   def new
