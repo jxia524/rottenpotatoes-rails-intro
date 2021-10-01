@@ -15,7 +15,6 @@ class MoviesController < ApplicationController
     @old_ratings = @ratings
     session[:ratings] = @old_ratings
     session[:sorted] = @sorted
-    redirect_to movies_path({sort:"title"})
   end
 
   def new
