@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
     @old_ratings = @ratings
     session[:ratings] = @old_ratings
     session[:sorted] = @sorted
-    if((params[:sorted].nil? and !session[:sorted].nil?) or (params[:ratings].nil? and !session[:ratings].nil?))
+    if((params[:sorted].nil? and !session[:sorted].nil?) and (params[:ratings].nil? and !session[:ratings].nil?))
       flash.keep
       redirect_to movies_path(sort: session[:sorted], ratings: session[:ratings])
     end
