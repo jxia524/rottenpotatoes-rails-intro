@@ -8,10 +8,14 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.getRatings()
-    @sorted = params[:sort]
-    #@movies = Movie.where(rating:'G').all.order(@sorted)
-    @ratings = params[:ratings] || {"G"=>"1", "PG"=>"1", "PG-13"=>"1", "R"=>"1"}
+    @old_ratings = session[:ratings] || {"G"=>"1", "PG"=>"1", "PG-13"=>"1", "R"=>"1"}
+    @sorted = params[:sort] || session[:sorted]
+    @ratings = params[:ratings] || @old_ratings
     @movies = Movie.where(rating: @ratings.keys).all.order(@sorted)
+    @old_ratings = @ratings
+    session[:ratings] = @old_ratings
+    session[:sorted] = @sorted
+    redirect_to movies_path({sort:"title"})
   end
 
   def new
